@@ -42,9 +42,10 @@ public class UserController {
         return "success";
     }
     @GetMapping("/listUser")
-    public List<User> listUser(){
+    @ResponseBody
+    public Iterable<User> listUser(){
         logger.debug("listUser has been involved!");
-        return null;
+        return userDao.findAll();
     }
 
     public UserDaoImpl getUserDao() {
