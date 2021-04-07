@@ -7,11 +7,14 @@ import javax.persistence.Id;
 import java.io.Serializable;
 @Entity
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-
     private Long userId;
-    private String name;
+    private String account;
+    private String realName;
+    private String phoneNumber;
+    private String nickName;
     private String password;
 
     public User() {
@@ -25,12 +28,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickName(String name) {
+        this.nickName = name;
     }
 
     public String getPassword() {
@@ -39,5 +42,29 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

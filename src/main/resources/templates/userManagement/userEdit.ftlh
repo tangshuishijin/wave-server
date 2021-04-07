@@ -7,7 +7,7 @@
             <table>
                 <tr>
                     <td><label class="col-sm1">用户名</label></td>
-                    <td> <input class="col-sm1" type="text" name="name"/></td>
+                    <td> <input class="col-sm1" type="text" name="nickName"/></td>
                 </tr>
                 <tr>
                     <td> <label class="col-sm1">密码</label></td>
