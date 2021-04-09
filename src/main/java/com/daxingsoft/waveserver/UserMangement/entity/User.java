@@ -14,7 +14,7 @@ public class User implements Serializable {
     private String account;
     private String realName;
     private String phoneNumber;
-    private String nickName;
+    private String nickname;
     private String password;
 
     public User() {
@@ -28,12 +28,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String name) {
-        this.nickName = name;
+    public void setNickname(String name) {
+        this.nickname = name;
     }
 
     public String getPassword() {

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{index ::header}">
+</head>
+<body>
+<div th:replace="~{index ::footer}">
+</div>
+<script>
+    Ext.create('Ext.panel.Panel',{
+        title:'用户管理',
+        width:200,
+        html:'<p>World!</p>',
+        renderTo:Ext.getBody()
+    })
+</script>
+</body>
+</html>

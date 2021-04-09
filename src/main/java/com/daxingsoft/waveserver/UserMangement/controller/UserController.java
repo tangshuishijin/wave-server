@@ -1,16 +1,18 @@
 package com.daxingsoft.waveserver.UserMangement.controller;
 
 
-import com.daxingsoft.waveserver.UserMangement.dao.UserDao;
 import com.daxingsoft.waveserver.UserMangement.daoImpl.UserDaoImpl;
 import com.daxingsoft.waveserver.UserMangement.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RequestMapping("/user")
@@ -21,15 +23,18 @@ public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/addUser")
-    public String addUser(/*User user*/){
+    public String addUser(/*User user*/Model model){
         logger.debug("addUser has been involved!");
-        return "userManagement/userEdit";
+        Map<String,Object> mp = new HashMap<>();
+        mp.put("users",userDao.findAll());
+        model.addAttribute("users",mp);
+        return "userManagement/userList";
     }
     @PostMapping("/addUser")
-    @ResponseBody
-    public String insertUser(User user){
-        userDao.save(user);
-        return "susscess";
+    public String insertUser(User user,Model model){
+        User userAdd = userDao.save(user);
+        model.addAttribute("users",userDao.findAll());
+        return "userManagement/userList";
     }
 
     public String editUser(User user){
