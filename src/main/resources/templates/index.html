@@ -3,42 +3,44 @@
 <head th:replace="~{template ::header}">
 </head>
 <body>
-
-
 <div th:replace="~{template ::footer}">
 </div>
 <script>
-    Ext.create('Ext.menu.Menu', {
-        width: 100,
-        margin: '0 0 10 0',
-        floating: false,  // 通常你想设置这个为真 (默认的)
-        renderTo: Ext.getBody(),  // 通常由它的包含容器呈现
-        items: [{
-            text: 'regular item 1'
-        },{
-            text: 'regular item 2'
-        },{
-            text: 'regular item 3'
-        }]
+    var userStore = Ext.create('Ext.data.Store', {
+        storeId: 'UserStore',
+        fields: ['realName', 'account', 'nickname','userId'],
+        proxy:{
+            type:'ajax',
+            url:'/user/userList',
+            reader:{
+                type:'json',
+                root:'users'
+            },
+        },
+        autoLoad:true
     });
-
-    Ext.create('Ext.menu.Menu', {
-        width: 100,
-        height: 110,
-        floating: false,  // 通常你想设置为"真" (默认)
-        renderTo: Ext.getBody(),  // 通常被包含它的容器所呈现
-        items: [{
-            xtype: 'menucheckitem',
-            text: 'select all'
-        },{
-            xtype: 'menucheckitem',
-            text: 'select specific',
-        },{
-            iconCls: 'add16',
-            text: 'icon item'
-        },{
-            text: 'regular item'
-        }]
+    Ext.create('Ext.grid.Panel', {
+        title: 'Users',
+        store: Ext.data.StoreManager.lookup('UserStore'),
+        columns: [{
+            text: 'realName',
+            dataIndex: 'realName'
+        }, {
+            text: 'account',
+            dataIndex: 'account',
+            flex: 1
+        },
+            {
+                text: 'id',
+                dataIndex: 'userId',
+                flex: 1
+            },{
+            text: 'nickname',
+            dataIndex: 'nickname'
+        }],
+        height: window.screen.height,
+        width: window.screen.width,
+        renderTo: Ext.getBody()
     });
 </script>
 </body>

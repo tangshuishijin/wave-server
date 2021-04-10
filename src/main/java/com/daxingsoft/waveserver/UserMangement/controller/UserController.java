@@ -6,6 +6,8 @@ import com.daxingsoft.waveserver.UserMangement.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,11 +48,17 @@ public class UserController {
         logger.debug("deleteUser has been involved!");
         return "success";
     }
-    @GetMapping("/listUser")
+    @GetMapping("/userList")
     @ResponseBody
-    public Iterable<User> listUser(){
-        logger.debug("listUser has been involved!");
-        return userDao.findAll();
+    public Map listUser(@RequestParam(name="page") int page,
+                        @RequestParam(name="start") int start,
+                        @RequestParam(name="limit") int limit){
+
+        Map map = new HashMap();
+        Page<User> users = userDao.findAll(PageRequest.of(page,limit));
+
+        map.put("users",users.getContent());
+        return map;
     }
 
     public UserDaoImpl getUserDao() {

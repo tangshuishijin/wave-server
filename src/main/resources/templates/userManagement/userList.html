@@ -1,82 +1,51 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{index ::header}">
+<head th:replace="~{template ::header}">
 </head>
 <body>
 
 <div class="container" id="container">
     <div id = "gridDiv"></div>
 </div>
-<div th:replace="~{index ::footer}">
+<div th:replace="~{template ::footer}">
 </div>
 <script>
-    Ext.onReady(function (){
-
-    })
-    Ext.define('UserDataModel', {
-        extend: 'Ext.data.Model',
-        fields: ["ID","account","realName","nickname"
-        ]
-    });
-    Ext.onReady(function(){
-        // Creation of first grid store
-        var gridStore = Ext.create('Ext.data.Store', {
-            model: 'UserDataModel',
-            proxy:{
-                type:'ajax',
-                actionMethods:{
-                    read:'GET'
-                },
-                url:'user/userList',
-                reader:{
-                    type:'json',
-                    root:'users'
-                }
+    var userStore = Ext.create('Ext.data.Store', {
+        storeId: 'UserStore',
+        fields: ['realName', 'account', 'nickname','userId'],
+        proxy:{
+            type:'ajax',
+            url:'/user/userList',
+            reader:{
+                type:'json',
+                root:'users'
             },
-        });
-        // Creation of first grid
-        Ext.create('Ext.grid.Panel', {
-            id                : 'gridId',
-            store             : gridStore,
-            stripeRows        : true,
-            title             : '用户列表', // Title for the grid
-            renderTo          :'gridDiv', // Div id where the grid has to be rendered
-            width             : 600,
-            collapsible       : true, // property to collapse grid
-            enableColumnMove  :true, // property which alllows column to move to different position by dragging that column.
-            enableColumnResize:true, // property which allows to resize column run time.
-            columns           :
-                [{
-                    header: "NickName",
-                    dataIndex: 'nickname',
-                    id : 'name',
-                    flex:  1,  		 // property defines the amount of space this column is going to take in the grid container with respect to all.
-                    sortable: true, // property to sort grid column data.
-                    hideable: true  // property which allows column to be hidden run time on user request.
-                },{
-                    header: "account",
-                    dataIndex: 'account',
-                    flex: .5,
-                    sortable: true,
-                    hideable: false // this column will not be available to be hidden.
-                },{
-                    header: "Id",
-                    dataIndex: 'userId',
-                    flex: .5,
-                    sortable: true,
-                    // renderer is used to manipulate data based on some conditions here who ever has marks greater than 75 will be displayed as 'Distinction' else 'Non Distinction'.
-                    renderer :  function (value, metadata, record, rowIndex, colIndex, store) {
-                        if (value > 75) {
-                            return "Distinction";
-                        } else {
-                            return "Non Distinction";
-                        }
-                    }
-                }]
-        });
+        },
+        autoLoad:true
     });
-
-
+    Ext.create('Ext.grid.Panel', {
+        title: 'Users',
+        store: Ext.data.StoreManager.lookup('UserStore'),
+        columns: [{
+            text: 'realName',
+            dataIndex: 'realName'
+        }, {
+            text: 'account',
+            dataIndex: 'account',
+            flex: 1
+        },
+            {
+                text: 'id',
+                dataIndex: 'userId',
+                flex: 1
+            },{
+                text: 'nickname',
+                dataIndex: 'nickname'
+            }],
+        height: window.screen.height,
+        width: window.screen.width,
+        renderTo: Ext.getBody()
+    });
 </script>
 </body>
 </html>

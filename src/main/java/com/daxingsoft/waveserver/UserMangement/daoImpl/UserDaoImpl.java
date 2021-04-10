@@ -51,4 +51,5 @@ public interface UserDaoImpl extends PagingAndSortingRepository<User, Long> {
 
     @Override
     void deleteAll();
+
 }
