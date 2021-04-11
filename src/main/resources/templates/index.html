@@ -6,41 +6,36 @@
 <div th:replace="~{template ::footer}">
 </div>
 <script>
-    var userStore = Ext.create('Ext.data.Store', {
-        storeId: 'UserStore',
-        fields: ['realName', 'account', 'nickname','userId'],
-        proxy:{
-            type:'ajax',
-            url:'/user/userList',
-            reader:{
-                type:'json',
-                root:'users'
-            },
-        },
-        autoLoad:true
-    });
-    Ext.create('Ext.grid.Panel', {
-        title: 'Users',
-        store: Ext.data.StoreManager.lookup('UserStore'),
-        columns: [{
-            text: 'realName',
-            dataIndex: 'realName'
-        }, {
-            text: 'account',
-            dataIndex: 'account',
-            flex: 1
-        },
+    Ext.create('Ext.tab.Panel', {
+        renderTo: Ext.getBody(),
+        height: 100,
+        width: 200,
+        items: [
             {
-                text: 'id',
-                dataIndex: 'userId',
-                flex: 1
-            },{
-            text: 'nickname',
-            dataIndex: 'nickname'
-        }],
-        height: window.screen.height,
-        width: window.screen.width,
-        renderTo: Ext.getBody()
+                // Explicitly define the xtype of this Component configuration.
+                // This tells the Container (the tab panel in this case)
+                // to instantiate a Ext.panel.Panel when it deems necessary
+                xtype: 'panel',
+                title: 'Tab One',
+                html: 'The first tab',
+                listeners: {
+                    render: function() {
+                        Ext.MessageBox.alert('Rendered One', 'Tab One was rendered.');
+                    }
+                }
+            },
+            {
+                // this component configuration does not have an xtype since 'panel' is the default
+                // xtype for all Component configurations in a Container
+                title: 'Tab Two',
+                html: 'The second tab',
+                listeners: {
+                    render: function() {
+                        Ext.MessageBox.alert('Rendered One', 'Tab Two was rendered.');
+                    }
+                }
+            }
+        ]
     });
 </script>
 </body>
